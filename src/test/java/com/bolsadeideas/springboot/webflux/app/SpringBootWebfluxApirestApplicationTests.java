@@ -85,6 +85,8 @@ public class SpringBootWebfluxApirestApplicationTests {
                     Assertions.assertThat(p.getId()).isNotEmpty();
                     Assertions.assertThat(p.getId().length()>0).isTrue();
                     Assertions.assertThat(p.getNombre()).isEqualTo("TV Sony Bravia OLED 4K Ultra HD");
+                    /* Prueba falla al no enconttrar coincidencia */
+                    Assertions.assertThat(p.getNombre()).isEqualTo("TV Sony Bravia OLED 8K Ultra HD");
                 }));
     }
 }
