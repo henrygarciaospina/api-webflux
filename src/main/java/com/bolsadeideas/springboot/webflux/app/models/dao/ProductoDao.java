@@ -6,6 +6,6 @@ import reactor.core.publisher.Mono;
 
 public interface ProductoDao extends ReactiveMongoRepository<Producto, String>{
 
-    public Mono<Producto> findByNombre(String Nombre);
+    public Mono<Producto> findByNombre(String nombre);
 
 }
