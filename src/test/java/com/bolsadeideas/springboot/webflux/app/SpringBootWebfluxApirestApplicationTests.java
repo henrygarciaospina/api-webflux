@@ -1,5 +1,6 @@
 package com.bolsadeideas.springboot.webflux.app;
 
+import com.bolsadeideas.springboot.webflux.app.models.documents.Categoria;
 import com.bolsadeideas.springboot.webflux.app.models.documents.Producto;
 import com.bolsadeideas.springboot.webflux.app.models.services.ProductoService;
 import org.assertj.core.api.Assertions;
@@ -10,10 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.reactive.server.WebTestClient;
-import reactor.core.publisher.Mono;
-import reactor.test.StepVerifier;
 
-import javax.xml.transform.Source;
 import java.util.Collections;
 import java.util.List;
 
@@ -23,10 +21,8 @@ public class SpringBootWebfluxApirestApplicationTests {
 
     @Autowired
     private WebTestClient client;
-
     @Autowired
     private ProductoService productoService;
-
 
     @Test
     public void listarTest() {
@@ -89,4 +85,5 @@ public class SpringBootWebfluxApirestApplicationTests {
                     Assertions.assertThat(p.getNombre()).isEqualTo("TV Sony Bravia OLED 8K Ultra HD");
                 }));
     }
+
 }
