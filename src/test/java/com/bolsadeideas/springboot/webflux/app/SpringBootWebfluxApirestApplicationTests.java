@@ -37,7 +37,7 @@ public class SpringBootWebfluxApirestApplicationTests {
 						System.out.println(p.getNombre());
 					});
 
-					Assertions.assertThat(productos.size()==8).isTrue();
+					Assertions.assertThat(productos.size()==9).isTrue();
 
 				}));
 				//.hasSize(9);
