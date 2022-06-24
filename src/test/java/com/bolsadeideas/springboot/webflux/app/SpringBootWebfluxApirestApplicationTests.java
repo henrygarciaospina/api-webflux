@@ -50,8 +50,9 @@ public class SpringBootWebfluxApirestApplicationTests {
         //.hasSize(9);
     }
 
+    //Primera forma de test método ver
     @Test
-    public void verTest() {
+    public void verTest1() {
        /*Para pruebas unitarias debe ser sincrono */
         Producto producto = productoService.findByNombre("TV Sony Bravia OLED 4K Ultra HD").block();
 
@@ -64,5 +65,26 @@ public class SpringBootWebfluxApirestApplicationTests {
                 .expectBody()
                 .jsonPath("$.id").isNotEmpty()
                 .jsonPath("$.nombre").isEqualTo("TV Sony Bravia OLED 4K Ultra HD");
+    }
+
+    //Segunda forma de test método ver
+    @Test
+    public void verTest2() {
+        /*Para pruebas unitarias debe ser sincrono */
+        Producto producto = productoService.findByNombre("TV Sony Bravia OLED 4K Ultra HD").block();
+
+        client.get()
+                .uri("/api/productos/{id}", Collections.singletonMap("id", producto.getId()))
+                .accept(MediaType.APPLICATION_JSON_UTF8)
+                .exchange()
+                .expectStatus().isOk()
+                .expectHeader().contentType(MediaType.APPLICATION_JSON_UTF8)
+                .expectBody(Producto.class)
+                .consumeWith((response -> {
+                    Producto p = response.getResponseBody();
+                    Assertions.assertThat(p.getId()).isNotEmpty();
+                    Assertions.assertThat(p.getId().length()>0).isTrue();
+                    Assertions.assertThat(p.getNombre()).isEqualTo("TV Sony Bravia OLED 4K Ultra HD");
+                }));
     }
 }
