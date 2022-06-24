@@ -14,6 +14,7 @@ import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
 import javax.xml.transform.Source;
+import java.util.Collections;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
@@ -51,14 +52,17 @@ public class SpringBootWebfluxApirestApplicationTests {
 
     @Test
     public void verTest() {
-
-        Mono<Producto> producto = null;
+       /*Para pruebas unitarias debe ser sincrono */
+        Producto producto = productoService.findByNombre("TV Sony Bravia OLED 4K Ultra HD").block();
 
         client.get()
-                .uri("/api/productos")
+                .uri("/api/productos/{id}", Collections.singletonMap("id", producto.getId()))
                 .accept(MediaType.APPLICATION_JSON_UTF8)
                 .exchange()
                 .expectStatus().isOk()
-                .expectHeader().contentType(MediaType.APPLICATION_JSON_UTF8);
+                .expectHeader().contentType(MediaType.APPLICATION_JSON_UTF8)
+                .expectBody()
+                .jsonPath("$.id").isNotEmpty()
+                .jsonPath("$.nombre").isEqualTo("TV Sony Bravia OLED 4K Ultra HD");
     }
 }
